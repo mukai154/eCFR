@@ -105,7 +105,7 @@ export default function HistoryView() {
           <ul>
             {data.map((item) => (
               <li key={item.date}>
-                <strong>{item.date}:</strong>{' '}
+                <strong>Title {item.title} on {item.date}:</strong>{' '}
                 {item.word_count ? `${item.word_count.toLocaleString()} words` : 'No data'}
               </li>
             ))}
