@@ -1,67 +1,21 @@
-import { useEffect, useState } from 'react';
-import { pingBackend, fetchMetrics } from './api/ecfrApi';
-import HistoryView from './views/HistoryView'; // Import the new view
-import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom'; // React Router setup
+import React from 'react';
+import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
+import HomeView from './views/HomeView';
 
-function MetricsView({ message, metrics }) {
-  return (
-    <>
-      <h1>🔗 ECFR Frontend</h1>
-      <p>
-        Backend Status: <strong>{message || 'Loading...'}</strong>
-      </p>
-      <section style={{ marginTop: '2rem' }}>
-        <h2>📊 Word Count by Agency</h2>
-        {metrics ? (
-          <ul>
-            {Object.entries(metrics.agencies).map(([agency, count]) => (
-              <li key={agency}>
-                <strong>{agency}:</strong> {count.toLocaleString()} words
-              </li>
-            ))}
-          </ul>
-        ) : (
-          <p>Loading metrics...</p>
-        )}
-      </section>
-    </>
-  );
-}
-
-function App() {
-  const [message, setMessage] = useState(null);
-  const [metrics, setMetrics] = useState(null);
-
-  useEffect(() => {
-    pingBackend()
-      .then((data) => setMessage(data.message))
-      .catch((err) => {
-        console.error('Error connecting to backend:', err);
-        setMessage('Error: Could not reach backend.');
-      });
-
-    fetchMetrics()
-      .then(setMetrics)
-      .catch((err) => {
-        console.error('Error fetching metrics:', err);
-      });
-  }, []);
-
+const App = () => {
   return (
     <Router>
-      <main style={{ padding: '2rem', fontFamily: 'sans-serif' }}>
-        <nav style={{ marginBottom: '2rem' }}>
-          <Link to="/" style={{ marginRight: '1rem' }}>Metrics</Link>
-          <Link to="/history">History</Link>
-        </nav>
+      <nav style={{ padding: '1rem', borderBottom: '1px solid #ccc', marginBottom: '2rem' }}>
+        <Link to="/" style={{ marginRight: '1rem' }}>Home</Link>
+        {/* You can add more links here */}
+      </nav>
 
-        <Routes>
-          <Route path="/" element={<MetricsView message={message} metrics={metrics} />} />
-          <Route path="/history" element={<HistoryView />} />
-        </Routes>
-      </main>
+      <Routes>
+        <Route path="/" element={<HomeView />} />
+        <Route path="*" element={<div>404 Not Found</div>} />
+      </Routes>
     </Router>
   );
-}
+};
 
 export default App;

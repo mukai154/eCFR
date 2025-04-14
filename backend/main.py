@@ -4,7 +4,7 @@ from typing import List  # Import List type for type hinting
 from fastapi import Query  # type: ignore # Import Query for query parameters
 import requests
 import xml.etree.ElementTree as ET
-from app.api.metrics import router as metrics_router  # Import router
+from app.api.ecfr_api.metrics import router as metrics_router  # Import router
 
 app = FastAPI()
 
