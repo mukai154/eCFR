@@ -2,9 +2,12 @@ import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 
 export default defineConfig({
-  base: '/', // ✅ Required for correct route resolution on Render
+  base: '/',
   plugins: [react()],
-  server: {
-    port: 5173,
-  },
+  preview: {
+    port: 4173,
+    strictPort: true,
+    // ✅ This is the fix 👇
+    allowedHosts: ['ecfr-nu4s.onrender.com']
+  }
 });
