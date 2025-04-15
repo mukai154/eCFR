@@ -11,7 +11,7 @@ const AgencySearch = ({ onSelect }) => {
   useEffect(() => {
     const fetchAgencies = async () => {
       try {
-        const res = await fetch('http://localhost:8000/agencies');
+        const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/agencies`);
         const data = await res.json();
         setAgencies(data);
       } catch (err) {
