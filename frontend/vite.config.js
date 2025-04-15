@@ -1,7 +1,10 @@
-import { defineConfig } from 'vite'
-import react from '@vitejs/plugin-react'
+import { defineConfig } from 'vite';
+import react from '@vitejs/plugin-react';
 
-// https://vite.dev/config/
 export default defineConfig({
+  base: '/', // ✅ Required for correct route resolution on Render
   plugins: [react()],
-})
+  server: {
+    port: 5173,
+  },
+});
