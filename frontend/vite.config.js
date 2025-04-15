@@ -4,10 +4,13 @@ import react from '@vitejs/plugin-react';
 export default defineConfig({
   base: '/',
   plugins: [react()],
+  server: {
+    host: true, // ✅ allows access from LAN IPs
+    port: 5173,
+  },
   preview: {
     port: 4173,
     strictPort: true,
-    // ✅ This is the fix 👇
-    allowedHosts: ['ecfr-nu4s.onrender.com']
+    allowedHosts: ['ecfr-nu4s.onrender.com'], // Add others if needed
   }
 });
