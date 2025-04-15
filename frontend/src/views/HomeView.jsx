@@ -62,7 +62,8 @@ function HomeView() {
         }
       }
 
-      setCorrectionsData(allCorrections);
+      const filteredCorrections = allCorrections.filter(c => c.total_corrections > 0);
+      setCorrectionsData(filteredCorrections);
       setExpandedIndices({});
       setLoading(false); // Finish loading
     };
@@ -193,8 +194,8 @@ function HomeView() {
         <section style={{ marginTop: '2rem' }}>
           <h3>Associated Regulations for {selectedAgency.agency}</h3>
           <h4>{selectedAgency.titles?.length || 0} Total Titles</h4>
-          <h4>  {correctionsData.reduce((acc, c) => acc + c.total_corrections, 0)} Total Corrections</h4>
-          {correctionsData.map((c, index) => (
+          <h4>{correctionsData.reduce((acc, c) => acc + c.total_corrections, 0)} Total Corrections</h4>
+          {correctionsData.length > 0 && correctionsData.map((c, index) => (
             <div key={c.title + c.chapter}>
               <strong>Title {c.title} CFR {c.chapter || ''}</strong> – Total Revisions: {c.total_corrections}
               {c.total_corrections > 0 && (
@@ -214,15 +215,19 @@ function HomeView() {
                     )}
                   </div>
                   <div style={{ margin: '0.5rem 0' }}>
-                    <button onClick={() => analyzeRevisionHistory(index, c)} disabled={!!analysisProgress[index]}>
-                      {analysisProgress[index]?.text || 'Analyze revision history'}
-                    </button>
-                    {analysisControllers[index] && (
-                      <button onClick={() => {
-                        analysisControllers[index].abort();
-                      }} style={{ marginLeft: '1rem' }}>
-                        Cancel
-                      </button>
+                    {c.total_corrections > 0 && (
+                      <>
+                        <button onClick={() => analyzeRevisionHistory(index, c)} disabled={!!analysisProgress[index]}>
+                          {analysisProgress[index]?.text || 'Analyze revision history'}
+                        </button>
+                        {analysisControllers[index] && (
+                          <button onClick={() => {
+                            analysisControllers[index].abort();
+                          }} style={{ marginLeft: '1rem' }}>
+                            Cancel
+                          </button>
+                        )}
+                      </>
                     )}
                     {analysisProgress[index] && (
                       <div style={{ width: '100%', background: '#ccc', marginTop: '0.5rem' }}>
