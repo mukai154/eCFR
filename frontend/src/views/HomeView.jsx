@@ -15,7 +15,7 @@ function HomeView() {
   useEffect(() => {
     const checkBackend = async () => {
       try {
-        const res = await fetch('http://localhost:8000/');
+        const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/`);
         const data = await res.json();
         setMessage(data.message);
       } catch (err) {
@@ -45,7 +45,7 @@ function HomeView() {
         }
 
         try {
-          const res = await fetch(`http://localhost:8000/corrections?title=${titleNumber}`);
+          const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/corrections?title=${titleNumber}`);
           const data = await res.json();
 
           allCorrections.push({
@@ -112,7 +112,7 @@ function HomeView() {
           }
         }));
 
-        const res = await fetch(`http://localhost:8000/wordcount?title=${titleData.title}&date=${date}`, {
+        const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/wordcount?title=${titleData.title}&date=${date}`, {
           signal: controller.signal
         });
         const data = await res.json();
