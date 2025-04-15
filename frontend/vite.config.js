@@ -11,6 +11,6 @@ export default defineConfig({
   preview: {
     port: 4173,
     strictPort: true,
-    allowedHosts: ['ecfr-nu4s.onrender.com'], // Add others if needed
+    allowedHosts: ['ecfr-nu4s.onrender.com', 'localhost'], // Add others if needed
   }
 });
